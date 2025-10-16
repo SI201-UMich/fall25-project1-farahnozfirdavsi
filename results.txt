@@ -1,0 +1,61 @@
+============================================================
+Average Body Mass by Species and Sex
+============================================================
+Adelie (male): 4043.49
+Adelie (female): 3368.84
+Adelie (NA): 3540.0
+Gentoo (female): 4679.74
+Gentoo (male): 5484.84
+Gentoo (NA): 4587.5
+Chinstrap (female): 3527.21
+Chinstrap (male): 3938.97
+
+============================================================
+Average Bill Length by Island and Year
+============================================================
+Torgersen (2007): 38.8
+Biscoe (2007): 45.04
+Dream (2007): 44.54
+Biscoe (2008): 44.62
+Torgersen (2008): 38.77
+Dream (2008): 43.76
+Biscoe (2009): 46.11
+Torgersen (2009): 39.31
+Dream (2009): 44.1
+
+============================================================
+Average Flipper Length by Species and Island
+============================================================
+Adelie (Torgersen): 191.2
+Adelie (Biscoe): 188.8
+Adelie (Dream): 189.73
+Gentoo (Biscoe): 217.19
+Chinstrap (Dream): 195.82
+
+============================================================
+Body Mass Difference by Sex and Island
+============================================================
+Biscoe: 785.14
+Torgersen: 638.95
+Dream: 540.79
+
+============================================================
+Bill Depth vs Flipper Length by Species
+============================================================
+Adelie: {'avg_bill_depth': 18.35, 'avg_flipper_length': 189.95}
+Gentoo: {'avg_bill_depth': 14.98, 'avg_flipper_length': 217.19}
+Chinstrap: {'avg_bill_depth': 18.42, 'avg_flipper_length': 195.82}
+
+============================================================
+Average Bill Length by Year and Sex
+============================================================
+2007 (male): 45.64
+2007 (female): 42.37
+2007 (NA): 38.95
+2008 (female): 41.49
+2008 (male): 45.51
+2009 (female): 42.45
+2009 (male): 46.38
+2008 (NA): 46.2
+2009 (NA): 45.9
+

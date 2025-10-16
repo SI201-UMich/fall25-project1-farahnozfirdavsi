@@ -4,7 +4,7 @@ import unittest
 # loading the data
 def load_data(penguins):
     data = []
-    with open (penguins.csv, "r", encoding="utf-8") as infile:
+    with open("penguins.csv", "r", encoding="utf-8") as infile:
         csv_reader = csv.DictReader(infile)
         for row in csv_reader:
             data.append(row)
@@ -33,9 +33,10 @@ def avg_body_mass_by_species_and_sex(data):
             results[key] = {"total": 0, "count": 0}
         results[key]["total"] += body_mass
         results[key]["count"] += 1
-    avg = {f"{sp} {{sx}}": round(v["total"] / v["count"], 2) 
+    avg = {f"{sp} ({sx})": round(v["total"] / v["count"], 2)
            for (sp, sx), v in results.items()}
     return avg
+
 
 def avg_bill_lengh_by_island_and_year(data):
     results = {}
@@ -158,3 +159,69 @@ def main():
             f.write("\n")
 
     print(" All results written to 'results.txt'.")
+
+class TestPenguinFunctions(unittest.TestCase):
+
+    def setUp(self):
+        self.data = [
+            {"species": "Adelie", "island": "Torgersen", "bill_length_mm": "39.1", "bill_depth_mm": "18.7",
+             "flipper_length_mm": "181", "body_mass_g": "3750", "sex": "MALE", "year": "2007"},
+            {"species": "Adelie", "island": "Torgersen", "bill_length_mm": "39.5", "bill_depth_mm": "17.4",
+             "flipper_length_mm": "186", "body_mass_g": "3800", "sex": "FEMALE", "year": "2007"},
+            {"species": "Gentoo", "island": "Biscoe", "bill_length_mm": "49.5", "bill_depth_mm": "15.9",
+             "flipper_length_mm": "222", "body_mass_g": "5250", "sex": "FEMALE", "year": "2009"},
+            {"species": "Chinstrap", "island": "Dream", "bill_length_mm": "46.5", "bill_depth_mm": "17.9",
+             "flipper_length_mm": "195", "body_mass_g": "3650", "sex": "MALE", "year": "2008"}
+        ]
+    #  avg_body_mass_by_species_and_sex
+    def test_avg_body_mass_by_species_and_sex(self):
+        result = avg_body_mass_by_species_and_sex(self.data)
+        self.assertIn("Adelie (MALE)", result)
+        self.assertIn("Adelie (FEMALE)", result)
+        self.assertEqual(result["Adelie (MALE)"], 3750.0)
+        self.assertTrue(all(isinstance(v, float) for v in result.values()))
+
+    #  avg_bill_length_by_island_and_year
+    def test_avg_bill_length_by_island_and_year(self):
+        result = avg_bill_lengh_by_island_and_year(self.data)
+        self.assertIn("Torgersen (2007)", result)
+        self.assertTrue(all(isinstance(v, float) for v in result.values()))
+        self.assertEqual(result["Torgersen (2007)"], round((39.1 + 39.5) / 2, 2))
+        self.assertEqual(len(result), 3)
+
+    # avg_flipper_length_by_species_and_island
+    def test_avg_flipper_length_by_species_and_island(self):
+        result = avg_flipper_length_by_species_and_island(self.data)
+        self.assertIn("Gentoo (Biscoe)", result)
+        self.assertIn("Adelie (Torgersen)", result)
+        self.assertEqual(result["Adelie (Torgersen)"], round((181 + 186)/2, 2))
+        self.assertTrue(all(isinstance(v, float) for v in result.values()))
+
+    #  body_mass_difference_by_sex_and_island
+    def test_body_mass_difference_by_sex_and_island(self):
+        result = body_mass_difference_by_sex_and_island(self.data)
+        self.assertIn("Torgersen", result)
+        self.assertIsInstance(result, dict)
+        self.assertEqual(result["Torgersen"], 3750 - 3800)
+        self.assertTrue(all(isinstance(v, float) or isinstance(v, int) for v in result.values()))
+
+    #  bill_depth_vs_flipper_length_by_species
+    def test_bill_depth_vs_flipper_length_by_species(self):
+        result = bill_depth_vs_flipper_length_by_species(self.data)
+        self.assertIn("Adelie", result)
+        self.assertIn("Gentoo", result)
+        self.assertIn("avg_bill_depth", result["Adelie"])
+        self.assertIn("avg_flipper_length", result["Adelie"])
+
+    # avg_bill_length_by_year_and_sex
+    def test_avg_bill_length_by_year_and_sex(self):
+        result = avg_bill_length_by_year_and_sex(self.data)
+        self.assertIn("2007 (MALE)", result)
+        self.assertIn("2007 (FEMALE)", result)
+        self.assertEqual(result["2007 (MALE)"], 39.1)
+        self.assertTrue(all(isinstance(v, float) for v in result.values()))
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)
+    main()
