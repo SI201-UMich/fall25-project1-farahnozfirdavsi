@@ -1,3 +1,16 @@
+"""
+NAME: Farahnoz Firdavsi
+EMAIL: farahnoz@umich.edu
+ID: 3233 8124
+Team: Aaliya Mohamad, Aili Hamawaki
+GenAI Tools Used: ChatGPT, we used chatgpt to help us decide on a strucutre for our code, 
+we also used it to help us debug some of our functoins and test cases. 
+Functions by Member:
+#   Farah: avg_body_mass_by_species_and_sex, avg_bill_lengh_by_island_and_year
+#   Aaliya: avg_flipper_length_by_species_and_island, body_mass_difference_by_sex_and_island
+#   Aili: bill_depth_vs_flipper_length_by_species, avg_bill_length_by_year_and_sex
+"""
+
 import csv
 import unittest
 
@@ -21,6 +34,9 @@ def safe_float(value):
     
 # Farah's functions
 def avg_body_mass_by_species_and_sex(data):
+    ''' 
+    parameters: 
+    '''
     results = {}
     for row in data:
         species = row.get("species", "")
@@ -158,7 +174,6 @@ def main():
                 f.write(f"{key}: {value}\n")
             f.write("\n")
 
-    print(" All results written to 'results.txt'.")
 
 class TestPenguinFunctions(unittest.TestCase):
 
@@ -180,6 +195,11 @@ class TestPenguinFunctions(unittest.TestCase):
         self.assertIn("Adelie (FEMALE)", result)
         self.assertEqual(result["Adelie (MALE)"], 3750.0)
         self.assertTrue(all(isinstance(v, float) for v in result.values()))
+
+    def test_avg_body_mass_with_missing_values(self):
+        data = [{"species": "Adelie", "sex": "", "body_mass_g": "3750"}]
+        result = avg_body_mass_by_species_and_sex(data)
+        self.assertEqual(result, {}) 
 
     #  avg_bill_length_by_island_and_year
     def test_avg_bill_length_by_island_and_year(self):

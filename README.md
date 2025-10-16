@@ -1,3 +1,8 @@
+## MY VIDEO LINK!!!
+https://www.loom.com/share/8b2a67e609444157b6f06ad33486b9da?sid=4f1c07c8-da12-47e2-a7f1-7e99270b0da0
+
+
+
 ## Data frame we will be using: Penguins ##
 #### Columns:
 - `species`
