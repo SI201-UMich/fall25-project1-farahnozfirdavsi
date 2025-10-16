@@ -1,6 +1,8 @@
 ## MY VIDEO LINK!!!
 https://www.loom.com/share/8b2a67e609444157b6f06ad33486b9da?sid=4f1c07c8-da12-47e2-a7f1-7e99270b0da0
 
+![our funcrtion diagram chart]("Screenshot 2025-10-15 at 11.56.37 PM.png" "Optional Title Text")
+
 
 
 ## Data frame we will be using: Penguins ##
