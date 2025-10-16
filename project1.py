@@ -2,7 +2,7 @@ import csv
 import unittest
 
 # loading the data
-def load_data(penguins.csv):
+def load_data(penguins):
     data = []
     with open (penguins.csv, "r", encoding="utf-8") as infile:
         csv_reader = csv.DictReader(infile)
@@ -26,14 +26,14 @@ def avg_body_mass_by_species_and_sex(data):
         species = row.get("species", "")
         sex = row.get("sex", "")
         body_mass = safe_float(row.get("body_mass_g", ""))
-        if not in species or not sex or body_mass is None:
+        if not species or not sex or body_mass is None:
             continue
         key = (species, sex)
         if key not in results:
             results[key] = {"total": 0, "count": 0}
         results[key]["total"] += body_mass
         results[key]["count"] += 1
-    avg = {f"{sp} {{sx}}": roung(v["total"] / v["count"], 2) 
+    avg = {f"{sp} {{sx}}": round(v["total"] / v["count"], 2) 
            for (sp, sx), v in results.items()}
     return avg
 
@@ -50,8 +50,8 @@ def avg_bill_lengh_by_island_and_year(data):
             results[key] = {"total": 0, "count": 0}
         results[key]["total"] += bill_length
         results[key]["count"] += 1
-    avg = {f"{is} {yr}": round(v["total"] / v["count"], 2) 
-           for (is, yr), v in results.items()}
+    avg = {f"{island} ({year})": round(v["total"] / v["count"], 2)
+           for (island, year), v in results.items()}
     return avg
 
 # Aaliya's code and calculations
@@ -134,3 +134,27 @@ def avg_bill_length_by_year_and_sex(data):
     avg = {f"{year} ({sex})": round(v["total"] / v["count"], 2)
            for (year, sex), v in results.items()}
     return avg
+
+def main():
+    filename = "penguins.csv"
+    data = load_data("penguins.csv")
+
+    results = {
+        "Average Body Mass by Species and Sex": avg_body_mass_by_species_and_sex(data),
+        "Average Bill Length by Island and Year": avg_bill_lengh_by_island_and_year(data),
+        "Average Flipper Length by Species and Island": avg_flipper_length_by_species_and_island(data),
+        "Body Mass Difference by Sex and Island": body_mass_difference_by_sex_and_island(data),
+        "Bill Depth vs Flipper Length by Species": bill_depth_vs_flipper_length_by_species(data),
+        "Average Bill Length by Year and Sex": avg_bill_length_by_year_and_sex(data)
+    }
+
+    with open("results.txt", "w", encoding="utf-8") as f:
+        for title, result in results.items():
+            f.write(f"{'='*60}\n")
+            f.write(f"{title}\n")
+            f.write(f"{'='*60}\n")
+            for key, value in result.items():
+                f.write(f"{key}: {value}\n")
+            f.write("\n")
+
+    print(" All results written to 'results.txt'.")
