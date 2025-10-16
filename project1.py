@@ -1,21 +1,11 @@
 import csv
+import unittest
 
-# -----------------------------------------------------
-# 1. Load CSV
-# -----------------------------------------------------
-def load_csv(filename):
+# loading the data
+def load_data(penguins.csv):
     data = []
-    with open(filename, mode='r', encoding='utf-8') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            if '' in row:
-                del row['']
+    with open (penguins.csv, "r", encoding="utf-8") as infile:
+        csv_reader = csv.DictReader(infile)
+        for row in csv_reader:
             data.append(row)
     return data
-# helper to convert strings to floats safely
-def safe_float(value):
-    """Convert string to float, safely skipping bad or missing values."""
-    try:
-        return float(value)
-    except (ValueError, TypeError):
-        return None
