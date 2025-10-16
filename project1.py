@@ -36,3 +36,20 @@ def avg_body_mass_by_species_and_sex(data):
     avg = {f"{sp} {{sx}}": roung(v["total"] / v["count"], 2) 
            for (sp, sx), v in results.items()}
     return avg
+
+def avg_bill_lengh_by_island_and_year(data):
+    results = {}
+    for row in data:
+        island = row.get("island", "")
+        year = row.get("year", "")
+        bill_length = safe_float(row.get("bill_length_mm", ""))
+        if not island or not year or bill_length is None:
+            continue
+        key = (island, year)
+        if key not in results:
+            results[key] = {"total": 0, "count": 0}
+        results[key]["total"] += bill_length
+        results[key]["count"] += 1
+    avg = {f"{is} {yr}": round(v["total"] / v["count"], 2) 
+           for (is, yr), v in results.items()}
+    return avg
